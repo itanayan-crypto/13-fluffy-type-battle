@@ -1,0 +1,280 @@
+/* FluffyTypeBattle.css
+   Task Lab theme: light lavender page (supplied by the site), navy ink,
+   thick navy outlines with hard offset shadows, pill buttons, pastel accents.
+   Everything is scoped under .ftb and every class is prefixed ftb-. */
+
+.ftb {
+  --ink: #1f1b4d;
+  --ink-soft: #5b5690;
+  --paper: #ffffff;
+  --lav: #efeaff;
+  --yellow: #ffd23f;
+  --yellow-soft: #fff1bd;
+  --pink: #ff8fb1;
+  --pink-soft: #ffe0ea;
+  --mint: #6fe3b0;
+  --mint-soft: #d3f6e5;
+  --blue: #4f7cff;
+  --blue-soft: #dce6ff;
+  --ok: #0e8a62;
+  --bad: #d6204a;
+
+  color: var(--ink);
+  font-family: inherit;
+  font-weight: 600;
+  line-height: 1.45;
+}
+:where(.ftb) *, :where(.ftb) *::before, :where(.ftb) *::after { box-sizing: border-box; }
+:where(.ftb) h2, :where(.ftb) h3 { margin: 0; font-weight: 800; }
+:where(.ftb) h3 { margin: 24px 0 10px; font-size: 1.05rem; }
+:where(.ftb) ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+
+.ftb-w { display: grid; gap: 22px; }
+.ftb-setup { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr); gap: 22px; }
+
+/* ---------- Panels + step headings ---------- */
+.ftb-panel {
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  border-radius: 24px;
+  box-shadow: 5px 5px 0 var(--ink);
+  padding: 20px 22px;
+}
+.ftb-step { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; font-size: 1.2rem; }
+.ftb-badge {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  font-size: 0.85rem;
+  font-weight: 800;
+}
+.ftb-badge.ftb-yl { background: var(--yellow); }
+.ftb-badge.ftb-pk { background: var(--pink); }
+.ftb-badge.ftb-mt { background: var(--mint); }
+.ftb-jp { margin-left: auto; font-size: 0.85rem; font-weight: 800; color: var(--ink-soft); }
+.ftb-hint, .ftb-note, .ftb-tip { margin: 14px 2px 0; color: var(--ink-soft); font-size: 0.92rem; }
+.ftb-note { margin-top: 10px; }
+
+/* ---------- Buttons + exercise chips ---------- */
+.ftb-btn, .ftb-chip, .ftb-ch {
+  font: inherit;
+  color: var(--ink);
+  background: var(--paper);
+  border: 3px solid var(--ink);
+  box-shadow: 0 4px 0 var(--ink);
+  cursor: pointer;
+  transition: transform 0.12s, box-shadow 0.12s, background-color 0.12s;
+}
+.ftb-btn { padding: 10px 24px; border-radius: 999px; font-size: 0.95rem; font-weight: 800; }
+.ftb-btn--mint { background: var(--mint); }
+.ftb-btn--sun { background: var(--yellow); }
+.ftb-btn:hover:not(:disabled), .ftb-chip:hover, .ftb-ch:hover { transform: translateY(-2px); box-shadow: 0 6px 0 var(--ink); }
+.ftb-btn:active:not(:disabled), .ftb-chip:active { transform: translateY(3px); box-shadow: 0 1px 0 var(--ink); }
+.ftb-btn:disabled { opacity: 0.45; cursor: default; box-shadow: 0 2px 0 var(--ink); }
+.ftb-btn:focus-visible, .ftb-chip:focus-visible, .ftb-ch:focus-visible { outline: 3px solid var(--blue); outline-offset: 3px; }
+.ftb-row { display: flex; flex-wrap: wrap; gap: 12px; }
+
+.ftb-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1px;
+  padding: 8px 18px 9px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 800;
+  text-align: left;
+}
+.ftb-chip small { font-size: 0.66rem; font-weight: 700; color: var(--ink-soft); }
+.ftb-chip[aria-pressed="true"] { background: var(--yellow); }
+.ftb-chip[aria-pressed="true"] small { color: var(--ink); }
+
+/* ---------- Buddy picker ---------- */
+.ftb-chs { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.ftb-ch {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 6px 10px;
+  border-radius: 22px;
+  font-size: 0.95rem;
+}
+.ftb-ch canvas { width: 84px; height: 105px; }
+.ftb-ch b { font-weight: 900; }
+.ftb-ch small { font-size: 0.7rem; font-weight: 700; color: var(--ink-soft); }
+.ftb-ch[aria-pressed="true"] { background: var(--blue-soft); transform: translateY(-3px); box-shadow: 0 7px 0 var(--ink); }
+.ftb-ch[aria-pressed="true"]::after {
+  content: "\2713";
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 3px solid var(--ink);
+  border-radius: 50%;
+  background: var(--mint);
+  font-size: 0.8rem;
+}
+
+/* ---------- Arena: HUD, canvas, stats ---------- */
+.ftb-hud { display: grid; grid-template-columns: 1fr auto 1fr; gap: 18px; align-items: end; margin-bottom: 12px; }
+.ftb-hud label { display: block; margin-bottom: 5px; font-size: 0.95rem; font-weight: 800; }
+.ftb-r { text-align: right; }
+.ftb-mid { text-align: center; }
+.ftb-mid b {
+  display: inline-block;
+  padding: 4px 18px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+}
+.ftb-mid small { display: block; margin-top: 6px; font-size: 0.72rem; font-weight: 700; color: var(--ink-soft); }
+
+.ftb-trk { height: 22px; overflow: hidden; border: 3px solid var(--ink); border-radius: 999px; background: var(--lav); }
+.ftb-trk i {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: var(--mint);
+  box-shadow: inset 0 -5px 0 rgba(31, 27, 77, 0.14);
+  transition: width 0.12s linear;
+}
+.ftb-r .ftb-trk i { margin-left: auto; background: var(--pink); }
+.ftb-ult { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.ftb-ult span { min-width: 118px; font-size: 0.78rem; font-weight: 900; }
+.ftb-ult .ftb-trk { flex: 1; height: 16px; }
+.ftb-ult .ftb-trk i { width: 0; background: var(--yellow); }
+
+.ftb-cv {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 3px solid var(--ink);
+  border-radius: 20px;
+  box-shadow: 0 5px 0 var(--ink);
+}
+.ftb-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin: 20px 0 16px; }
+.ftb-stat { padding: 10px 14px; border: 3px solid var(--ink); border-radius: 16px; font-size: 0.8rem; color: var(--ink-soft); }
+.ftb-stat:nth-child(1) { background: var(--blue-soft); }
+.ftb-stat:nth-child(2) { background: var(--pink-soft); }
+.ftb-stat:nth-child(3) { background: var(--mint-soft); }
+.ftb-stat:nth-child(4) { background: var(--yellow-soft); }
+.ftb-stat small { display: block; font-size: 0.72rem; font-weight: 800; }
+.ftb-stat b { font-size: 1.5rem; font-variant-numeric: tabular-nums; color: var(--ink); }
+
+/* ---------- Typing box ---------- */
+.ftb-tx { position: relative; padding: 18px 22px; border: 3px solid var(--ink); border-radius: 20px; background: var(--paper); cursor: text; }
+.ftb-tx:focus-within { outline: 3px solid var(--blue); outline-offset: 3px; }
+.ftb-txt { font-size: 1.4rem; line-height: 2; font-weight: 600; white-space: pre-wrap; word-break: break-word; }
+.ftb-c { opacity: 0.4; }
+.ftb-c.ftb-ok { opacity: 1; color: var(--ok); }
+.ftb-c.ftb-bad { opacity: 1; color: var(--bad); background: var(--pink-soft); border-radius: 4px; }
+.ftb-c.ftb-cur { opacity: 1; background: var(--yellow); border-radius: 5px; box-shadow: 0 2px 0 var(--ink); }
+.ftb-inp { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; border: 0; cursor: text; }
+
+/* ---------- Report ---------- */
+.ftb-rh { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; }
+.ftb-rh h2 { font-size: 1.4rem; }
+.ftb-lvl { padding: 5px 18px; border: 3px solid var(--ink); border-radius: 999px; background: var(--yellow); box-shadow: 0 3px 0 var(--ink); font-weight: 800; }
+.ftb-sub { margin: 8px 0 0; color: var(--ink-soft); }
+.ftb-up { color: var(--ok); }
+.ftb-dn { color: var(--bad); }
+
+.ftb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 18px; }
+.ftb-card { display: flex; flex-direction: column; padding: 14px 16px; border: 3px solid var(--ink); border-radius: 18px; background: var(--paper); box-shadow: 0 4px 0 var(--ink); }
+.ftb-card small { font-size: 0.72rem; font-weight: 800; color: var(--ink-soft); }
+.ftb-card b { font-size: 2rem; line-height: 1.15; font-variant-numeric: tabular-nums; }
+.ftb-card span { font-size: 0.8rem; color: var(--ink-soft); }
+.ftb-card.ftb-big { background: var(--yellow-soft); }
+.ftb-card.ftb-big:nth-child(3) { background: var(--mint-soft); }
+
+.ftb-two { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 26px; }
+.ftb-sp { width: 100%; height: auto; border: 3px solid var(--ink); border-radius: 16px; background: var(--lav); color: var(--ink); }
+
+.ftb-kb { display: grid; gap: 6px; overflow-x: auto; padding: 2px 2px 8px; }
+.ftb-kr { display: flex; gap: 6px; }
+.ftb-k {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  width: 32px;
+  height: 32px;
+  border: 2px dashed rgba(31, 27, 77, 0.3);
+  border-radius: 10px;
+  color: var(--ink-soft);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+.ftb-k.ftb-g, .ftb-k.ftb-wn, .ftb-k.ftb-b { border: 2px solid var(--ink); color: var(--ink); }
+.ftb-k.ftb-g { background: var(--mint); }
+.ftb-k.ftb-wn { background: var(--yellow); }
+.ftb-k.ftb-b { background: var(--pink); }
+.ftb-lg { display: flex; flex-wrap: wrap; gap: 14px; margin: 12px 0 0; font-size: 0.8rem; }
+.ftb-lg span { display: inline-flex; align-items: center; gap: 6px; }
+.ftb-lg .ftb-k { width: 16px; height: 16px; border-radius: 5px; }
+
+.ftb-ls li { display: flex; align-items: center; gap: 12px; padding: 9px 14px; border: 3px solid var(--ink); border-radius: 16px; background: var(--paper); }
+.ftb-ls span { flex: 1; font-size: 0.9rem; }
+:where(.ftb) kbd {
+  min-width: 44px;
+  padding: 2px 10px;
+  border: 2px solid var(--ink);
+  border-radius: 10px;
+  background: var(--yellow);
+  box-shadow: 0 2px 0 var(--ink);
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-align: center;
+}
+
+.ftb-sg { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 16px 12px 18px; border: 3px solid var(--ink); border-left-width: 12px; border-radius: 18px; background: var(--paper); }
+.ftb-sg p { margin: 4px 0 0; font-size: 0.92rem; }
+.ftb-sg.ftb-rose { background: var(--pink-soft); border-left-color: var(--pink); }
+.ftb-sg.ftb-sun { background: var(--yellow-soft); border-left-color: var(--yellow); }
+.ftb-sg.ftb-mint { background: var(--mint-soft); border-left-color: var(--mint); }
+
+/* ---------- History ---------- */
+.ftb-tw { overflow-x: auto; margin-top: 14px; }
+:where(.ftb) table { width: 100%; border-collapse: collapse; }
+:where(.ftb) th { text-align: left; font-size: 0.78rem; font-weight: 800; color: var(--ink-soft); }
+:where(.ftb) th, :where(.ftb) td { padding: 10px 12px; border-bottom: 2px solid rgba(31, 27, 77, 0.12); white-space: nowrap; }
+
+/* ---------- Responsive + motion ---------- */
+@media (max-width: 900px) {
+  .ftb-setup { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 640px) {
+  .ftb-panel { padding: 16px; }
+  .ftb-chs, .ftb-stats, .ftb-grid { grid-template-columns: repeat(2, 1fr); }
+  .ftb-two { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  .ftb-hud { grid-template-columns: 1fr 1fr; }
+  .ftb-mid { grid-column: 1 / -1; order: -1; }
+  .ftb-txt { font-size: 1.1rem; }
+  .ftb-sg { flex-direction: column; align-items: flex-start; }
+  .ftb-jp { display: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ftb-btn, .ftb-chip, .ftb-ch, .ftb-trk i { transition: none; }
+}
+
+/* ---------- difficulty, enemy trait, meters ---------- */
+.ftb-diff { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 18px; }
+.ftb-diff > span { margin-right: 4px; font-size: 0.9rem; font-weight: 800; }
+.ftb-chip--sm { flex-direction: row; padding: 5px 16px; font-size: 0.85rem; }
+.ftb-trait { display: block; margin-top: 4px; font-size: 0.72rem; font-weight: 700; color: var(--ink-soft); }
+.ftb-meters { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 14px; }
+.ftb-meters .ftb-ult { margin-bottom: 0; }
+.ftb-chg .ftb-trk i { background: var(--pink); }
+@media (max-width: 640px) { .ftb-meters { grid-template-columns: 1fr; gap: 10px; } }
